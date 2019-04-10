@@ -25,8 +25,8 @@ class TicketTypesController < ApplicationController
   # POST /ticket_types.json
   def create
     @ticket_type = TicketType.new(ticket_type_params)
-    @ticket_type.ticket_zone_id = 1
-    @ticket_type.event_id = 1
+    #@ticket_type.ticket_zone_id = 1
+    #@ticket_type.event_id = 1
 
     respond_to do |format|
       if @ticket_type.save

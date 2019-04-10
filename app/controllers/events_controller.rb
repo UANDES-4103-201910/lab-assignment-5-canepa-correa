@@ -62,11 +62,10 @@ class EventsController < ApplicationController
   end
 
   def upcoming_events
-      @event = Event.where(start_date: DateTime.now.prev_month(1)..DateTime.now)
-      #respond_to do |format|
-        #format.html { redirect_to events_url,  notice: 'hola.' }
-        #format.json { render :index, status: :ok, location: @event }
-      #end
+      @events = Event.where(start_date: DateTime.now.prev_month(3)..DateTime.now)
+      respond_to do |format|
+        format.json {render json: @events.to_json}
+      end
   end
 
   private

@@ -61,11 +61,10 @@ class UsersController < ApplicationController
   end
 
   def user_with_most_tickets
-    @user = User.find(User.joins({:orders => :tickets}).group(:user_id).count.max_by{|x,v| v}[0])
-    respond_to do |format|
-      format.html { redirect_to @user, notice: 'This is the user has bought most tickets.' }
-      format.json { render :show, status: :ok, location: @user }
-    end
+      @user = User.find(User.joins({:orders => :tickets}).group(:user_id).count.max_by{|x,v| v}[0])
+      respond_to do |format|
+        format.json {render json: @user.to_json}
+      end
   end
 
   private

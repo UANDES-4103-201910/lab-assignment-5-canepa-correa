@@ -4,7 +4,14 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    if params[:ticket_type_id].nil?
+      @tickets = Ticket.all
+    else
+      @tickets_filtered = Ticket.where(ticket_type_id: TicketType.find(params[:ticket_type_id]).id)
+      respond_to do |format|
+        format.json {render json: @tickets_filtered.to_json}
+      end
+    end
   end
 
   # GET /tickets/1
@@ -25,8 +32,8 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = Ticket.new(ticket_params)
-    @ticket.ticket_type_id = 1
-    @ticket.order_id = 1
+    #@ticket.ticket_type_id = 1
+    #@ticket.order_id = 1
 
     respond_to do |format|
       if @ticket.save
