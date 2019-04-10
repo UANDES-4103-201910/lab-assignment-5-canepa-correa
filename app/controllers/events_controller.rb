@@ -61,6 +61,14 @@ class EventsController < ApplicationController
     end
   end
 
+  def upcoming_events
+      @event = Event.where(start_date: DateTime.now.prev_month(1)..DateTime.now)
+      #respond_to do |format|
+        #format.html { redirect_to events_url,  notice: 'hola.' }
+        #format.json { render :index, status: :ok, location: @event }
+      #end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event

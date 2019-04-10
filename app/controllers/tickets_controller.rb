@@ -25,6 +25,8 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = Ticket.new(ticket_params)
+    @ticket.ticket_type_id = 1
+    @ticket.order_id = 1
 
     respond_to do |format|
       if @ticket.save

@@ -25,7 +25,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -61,6 +60,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_with_most_tickets
+    @user = User.find(User.joins({:orders => :tickets}).group(:user_id).count.max_by{|x,v| v}[0])
+    respond_to do |format|
+      format.html { redirect_to @user, notice: 'This is the user has bought most tickets.' }
+      format.json { render :show, status: :ok, location: @user }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -71,4 +78,5 @@ class UsersController < ApplicationController
     def user_params
       params.fetch(:user, {})
     end
+
 end
